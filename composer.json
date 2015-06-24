@@ -1,0 +1,17 @@
+{
+    "name": "bigfishtv/magicmenu",
+    "description": "A CakePHP Plugin to generate HTML menus",
+    "type": "cakephp-plugin",
+    "authors": [
+        {
+            "name": "Adam Royle",
+            "email": "adam@bigfish.tv"
+        }
+    ],
+    "require": {
+		"cakephp/cakephp": "~3.0"
+	},
+    "autoload": {
+    	"psr-4": {"MagicMenu\\": "src/"}
+    }
+}
