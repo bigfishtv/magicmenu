@@ -11,7 +11,16 @@
     "require": {
 		"cakephp/cakephp": "~3.0"
 	},
+    "require-dev": {
+        "phpunit/phpunit": "*"
+    },
     "autoload": {
-    	"psr-4": {"MagicMenu\\": "src/"}
+        "psr-4": {"MagicMenu\\": "src/"}
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "Cake\\Test\\": "./vendor/cakephp/cakephp/tests",
+            "MagicMenu\\Test\\": "tests"
+        }
     }
 }
