@@ -27,6 +27,40 @@ class MenuTest extends TestCase
 		unset($this->Menu);
 	}
 
+	public function testSetItems()
+	{
+		$items = [
+			['title' => 'One'],
+			['title' => 'Two'],
+		];
+
+		$menu = $this->Menu->setItems($items);
+		$this->assertEquals($menu, $this->Menu, 'Menu::setItems() should return Menu instance');
+
+		$result = $this->Menu->getItems();
+		$this->assertEquals($result, $items, 'Menu::getItems() should match the items in Menu::setItems()');
+	}
+
+	public function testConstructorParams()
+	{
+		$items = [
+			['title' => 'One'],
+			['title' => 'Two'],
+		];
+
+		$options = [
+			'randomConfig' => 'randomValue'
+		];
+
+		$menu = new Menu($items, $options);
+
+		$result = $menu->getItems();
+		$this->assertEquals($result, $items, 'Menu::__construct should call setItems()');
+
+		$result = $menu->config('randomConfig');
+		$this->assertEquals($result, $options['randomConfig'], 'Menu::__construct should call config()');
+	}
+
 	public function testRender()
 	{
 		$result = $this->Menu->render();

@@ -23,6 +23,7 @@ class Menu
 	public function __construct($items = [], $options = [])
 	{
 		$this->setItems($items);
+		$this->config($options);
 	}
 
 	public function setItems($items)
