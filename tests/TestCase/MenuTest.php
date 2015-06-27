@@ -80,4 +80,38 @@ class MenuTest extends TestCase
 		$this->assertEquals($expected, $result);
 	}
 
+	public function testFlattenedItems()
+	{
+		$flattened = [
+			[
+				'path' => [0],
+				'item' => ['title' => 'About', 'url' => '/about'],
+			],
+			[
+				'path' => [1],
+				'item' => ['title' => 'Work', 'url' => '/work'],
+			],
+			[
+				'path' => [1, 0],
+				'item' => ['title' => 'Thiess', 'url' => '/work/thiess'],
+			],
+			[
+				'path' => [1, 1],
+				'item' => ['title' => 'MAX Employment', 'url' => '/work/max-employment'],
+			],
+			[
+				'path' => [1, 2],
+				'item' => ['title' => 'Spike & Dadda', 'url' => '/work/spike-and-dadda'],
+			],
+			[
+				'path' => [2],
+				'item' => ['title' => 'Contact', 'url' => '/contact'],
+			]
+		];
+
+		$result = $this->Menu->getFlattenedItems();
+		$this->assertEquals($flattened, $result);
+
+	}
+
 }
