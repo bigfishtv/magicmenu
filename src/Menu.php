@@ -39,28 +39,37 @@ class Menu
 
 	public function render()
 	{
+		return $this->renderWrapper($this->_items);
+	}
+
+	public function renderWrapper($items) {
 		$items = array_map(function($item) {
-			$options = [
-				//'class' => 'active'
-			];
-			return $this->formatTemplate('item', [
-				'title' => $item['title'],
-				'url' => $item['url'],
-				'attrs' => $this->templater()->formatAttributes($options),
-				'children' => '',
-			]);
-		}, $this->_items);
-
+			return $this->renderItem($item);
+		}, $items);
 		$options = [
-			'class' => 'nav'
+			//'class' => 'nav'
 		];
-
-		$wrapper = $this->formatTemplate('wrapper', [
+		return $this->formatTemplate('wrapper', [
             'attrs' => $this->templater()->formatAttributes($options),
             'items' => implode('', $items),
         ]);
+	}
 
-        return $wrapper;
+	public function renderItem($item) {
+		$options = [
+			//'class' => 'active'
+		];
+		if (!empty($item['children'])) {
+			$children = $this->renderWrapper($item['children']);
+		} else {
+			$children = '';
+		}
+		return $this->formatTemplate('item', [
+			'title' => h($item['title']),
+			'url' => $item['url'],
+			'attrs' => $this->templater()->formatAttributes($options),
+			'children' => $children,
+		]);
 	}
 
 }
