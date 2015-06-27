@@ -8,7 +8,6 @@ use MagicMenu\Utility\ArrayUtils;
 
 class Menu
 {
-
 	use StringTemplateTrait;
 	use InstanceConfigTrait;
 	
@@ -67,7 +66,8 @@ class Menu
 		}, []);
 	}
 
-	public function renderWrapper($items) {
+	public function renderWrapper($items)
+	{
 		$items = array_map(function($item) {
 			return $this->renderItem($item);
 		}, $items);
@@ -80,7 +80,8 @@ class Menu
         ]);
 	}
 
-	public function renderItem($item) {
+	public function renderItem($item)
+	{
 		$options = [
 			//'class' => 'active'
 		];
