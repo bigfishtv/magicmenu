@@ -82,7 +82,7 @@ class MenuTest extends TestCase
 
 	public function testFlattenedItems()
 	{
-		$flattened = [
+		$expected = [
 			[
 				'path' => [0],
 				'item' => ['title' => 'About', 'url' => '/about'],
@@ -110,7 +110,7 @@ class MenuTest extends TestCase
 		];
 
 		$result = $this->Menu->getFlattenedItems();
-		$this->assertEquals($flattened, $result);
+		$this->assertEquals($expected, $result);
 
 	}
 
