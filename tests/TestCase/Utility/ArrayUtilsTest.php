@@ -7,7 +7,7 @@ use Cake\TestSuite\TestCase;
 
 class ArrayUtilsTest extends TestCase
 {
-	public function testPluck()
+	public function testConsume()
 	{
 		$array = [
 			'one' => 1,
@@ -15,7 +15,7 @@ class ArrayUtilsTest extends TestCase
 			'three' => 3
 		];
 
-		$value = ArrayUtils::pluck('two', $array);
+		$value = ArrayUtils::consume('two', $array);
 		$expected = 2;
 		$this->assertSame($expected, $value);
 
@@ -29,7 +29,7 @@ class ArrayUtilsTest extends TestCase
 			0 => false,
 			'true' => 'blue'
 		];
-		$value = ArrayUtils::pluck(0, $array);
+		$value = ArrayUtils::consume(0, $array);
 		$expected = false;
 		$this->assertSame($expected, $value);
 
@@ -41,7 +41,7 @@ class ArrayUtilsTest extends TestCase
 		$array = [
 			'nothing'
 		];
-		$value = ArrayUtils::pluck('undefined', $array);
+		$value = ArrayUtils::consume('undefined', $array);
 		$this->assertNull($value);
 
 		$expected = [

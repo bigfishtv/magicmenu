@@ -3,7 +3,7 @@ namespace MagicMenu\Utility;
 
 class ArrayUtils {
 	
-	public static function pluck($key, &$array) {
+	public static function consume($key, &$array) {
 		$value = null;
 		if (array_key_exists($key, $array)) {
 			$value = $array[$key];

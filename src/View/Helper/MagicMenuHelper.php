@@ -15,8 +15,8 @@ class MagicMenuHelper extends Helper
 
     public function create($data = null, $options = [])
     {
-        $class = ArrayUtils::pluck('menuClass', $options) ?: $this->config('menuClass');
-        $id = ArrayUtils::pluck('id', $options);
+        $class = ArrayUtils::consume('menuClass', $options) ?: $this->config('menuClass');
+        $id = ArrayUtils::consume('id', $options);
         
         $menu = new $class($data, $options);
 
