@@ -111,7 +111,23 @@ class MenuTest extends TestCase
 
 		$result = $this->Menu->getFlattenedItems();
 		$this->assertEquals($expected, $result);
+	}
 
+	public function testSetActivePath()
+	{
+		$path = [1, 2];
+		$menu = $this->Menu->setActivePath($path);
+		$this->assertSame($menu, $this->Menu, 'Menu::setActivePath() should return Menu instance');
+
+		$result = $this->Menu->getActivePath();
+		$this->assertEquals($result, $path, 'Menu::getActivePath() should match the path in Menu::setActivePath()');
+	}
+
+	public function testGetActivePath()
+	{
+		$result = $this->Menu->getActivePath();
+		$expected = [];
+		$this->assertSame($expected, $result, 'Menu::getActivePath() should return array');
 	}
 
 }

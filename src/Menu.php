@@ -21,6 +21,8 @@ class Menu
 
 	protected $_items = [];
 
+	protected $_activePath = [];
+
 	public function __construct($items = [], $options = [])
 	{
 		$this->setItems($items);
@@ -36,6 +38,17 @@ class Menu
 	public function getItems()
 	{
 		return $this->_items;
+	}
+
+	public function setActivePath($path)
+	{
+		$this->_activePath = $path;
+		return $this;
+	}
+
+	public function getActivePath()
+	{
+		return $this->_activePath;
 	}
 
 	public function render()
