@@ -54,13 +54,9 @@ class Menu
 		return array_reduce($items, function($list, $item) use ($path, &$index) {
 			$path[] = $index++;
 			$children = ArrayUtils::pluck('children', $item);
-			$list[] = [
-				'path' => $path,
-				'item' => $item
-			];
+			$list[] = compact('path', 'item');
 			if (is_array($children)) {
-				$children = $this->_flatten($children, $path);
-				$list = array_merge($list, $children);
+				$list = array_merge($list, $this->_flatten($children, $path));
 			}
 			return $list;
 		}, []);
