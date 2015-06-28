@@ -7,7 +7,7 @@ use Cake\TestSuite\TestCase;
 
 class ArrayUtilsTest extends TestCase
 {
-	public function testConsume()
+	public function testConsumeStringKey()
 	{
 		$array = [
 			'one' => 1,
@@ -24,7 +24,10 @@ class ArrayUtilsTest extends TestCase
 			'three' => 3
 		];
 		$this->assertSame($expected, $array);
+	}
 
+	public function testConsumeNumericKey()
+	{
 		$array = [
 			0 => false,
 			'true' => 'blue'
@@ -37,7 +40,10 @@ class ArrayUtilsTest extends TestCase
 			'true' => 'blue',
 		];
 		$this->assertSame($expected, $array);
+	}
 
+	public function testConsumeNonexistentKey()
+	{
 		$array = [
 			'nothing'
 		];
