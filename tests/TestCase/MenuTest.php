@@ -154,4 +154,10 @@ class MenuTest extends TestCase
 		$this->assertFalse($result);
 	}
 
+	public function testGetItemEmptyPath()
+	{
+		$result = $this->Menu->getItemAt([]);
+		$this->assertFalse($result);
+	}
+
 }
