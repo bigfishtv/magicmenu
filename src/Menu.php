@@ -23,13 +23,13 @@ class Menu
 
 	protected $_activePath = [];
 
-	public function __construct($items = [], $options = [])
+	public function __construct(array $items = [], array $options = [])
 	{
 		$this->setItems($items);
 		$this->config($options);
 	}
 
-	public function setItems($items)
+	public function setItems(array $items)
 	{
 		$this->_items = $items;
 		return $this;
@@ -40,7 +40,7 @@ class Menu
 		return $this->_items;
 	}
 
-	public function setActivePath($path)
+	public function setActivePath(array $path)
 	{
 		$this->_activePath = $path;
 		return $this;
@@ -51,7 +51,7 @@ class Menu
 		return $this->_activePath;
 	}
 
-	public function getItemAt($path)
+	public function getItemAt(array $path)
 	{
 		$items = $this->_items;
 		while (($i = array_shift($path)) !== null) {
@@ -76,7 +76,7 @@ class Menu
 		return $this->_flatten($this->_items);
 	}
 
-	protected function _flatten($items, $path = [])
+	protected function _flatten(array $items, array $path = [])
 	{
 		$index = 0;
 		return array_reduce($items, function($list, $item) use ($path, &$index) {
@@ -90,7 +90,7 @@ class Menu
 		}, []);
 	}
 
-	public function renderWrapper($items)
+	public function renderWrapper(array $items)
 	{
 		$items = array_map(function($item) {
 			return $this->renderItem($item);

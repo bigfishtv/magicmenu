@@ -13,7 +13,7 @@ class MagicMenuHelper extends Helper
         'menuClass' => 'MagicMenu\Menu'
     ];
 
-    public function create($data = null, $options = [])
+    public function create(array $data = [], array $options = [])
     {
         $class = ArrayUtils::consume('menuClass', $options) ?: $this->config('menuClass');
         $id = ArrayUtils::consume('id', $options);
