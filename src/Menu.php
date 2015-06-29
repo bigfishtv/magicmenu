@@ -51,6 +51,25 @@ class Menu
 		return $this->_activePath;
 	}
 
+	public function getItemAt($path)
+	{
+		$items = $this->_items;
+		do {
+			$index = array_shift($path);
+			if (!isset($items[$index])) {
+				return false;
+			}
+			if (count($path)) {
+				if (!isset($items[$index]['children'])) {
+					return false;
+				}
+				$items = $items[$index]['children'];
+			} else {
+				return $items[$index];
+			}
+		} while (true);
+	}
+
 	public function render()
 	{
 		return $this->renderWrapper($this->_items);

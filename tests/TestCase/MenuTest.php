@@ -130,4 +130,28 @@ class MenuTest extends TestCase
 		$this->assertSame($expected, $result, 'Menu::getActivePath() should return array');
 	}
 
+	public function testGetItemBasic()
+	{
+		$result = $this->Menu->getItemAt([1, 1]);
+		$expected = ['title' => 'MAX Employment', 'url' => '/work/max-employment'];
+		$this->assertEquals($expected, $result);
+	}
+
+	public function testGetItemWithChildren()
+	{
+		$result = $this->Menu->getItemAt([1]);
+		$expected = ['title' => 'Work', 'url' => '/work', 'children' => [
+			['title' => 'Thiess', 'url' => '/work/thiess'],
+			['title' => 'MAX Employment', 'url' => '/work/max-employment'],
+			['title' => 'Spike & Dadda', 'url' => '/work/spike-and-dadda'],
+		]];
+		$this->assertEquals($expected, $result);
+	}
+
+	public function testGetItemInvalidPath()
+	{
+		$result = $this->Menu->getItemAt([3]);
+		$this->assertFalse($result);
+	}
+
 }
