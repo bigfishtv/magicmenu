@@ -54,20 +54,16 @@ class Menu
 	public function getItemAt($path)
 	{
 		$items = $this->_items;
-		do {
-			$index = array_shift($path);
-			if (!isset($items[$index])) {
-				return false;
-			}
-			if (count($path)) {
-				if (!isset($items[$index]['children'])) {
-					return false;
-				}
-				$items = $items[$index]['children'];
+		while (($i = array_shift($path)) !== null) {
+			if (!$path && isset($items[$i])) {
+				return $items[$i];
+			} else if (isset($items[$i]['children'])) {
+				$items = $items[$i]['children'];
 			} else {
-				return $items[$index];
+				break;
 			}
-		} while (true);
+		}
+		return false;
 	}
 
 	public function render()
