@@ -12,6 +12,7 @@ class Menu
 	use InstanceConfigTrait;
 	
 	protected $_defaultConfig = [
+		'depth' => null,
         'errorClass' => 'error',
         'templates' => [
             'wrapper' => '<ul{{attrs}}>{{items}}</ul>',
@@ -64,6 +65,20 @@ class Menu
 			}
 		}
 		return false;
+	}
+
+	public function setDepth($depth)
+	{
+		return $this->config('depth', $depth);
+	}
+
+	public function getDepth()
+	{
+		$depth = $this->config('depth');
+		if (!$depth) {
+			return [0, INF];
+		}
+		return $depth;
 	}
 
 	public function getFlattenedItems()
@@ -120,7 +135,8 @@ class Menu
 		$options = [
 			'class' => $class ? implode(' ', $class) : null
 		];
-		if (!empty($item['children'])) {
+		list($minDepth, $maxDepth) = $this->getDepth();
+		if (!empty($item['children']) && $maxDepth >= count($path)) {
 			$children = $this->_renderWrapper($item['children'], $path);
 		} else {
 			$children = '';

@@ -118,6 +118,42 @@ class MenuTest extends TestCase
 		$this->assertEquals($expected, $result);
 	}
 
+	public function testDefaultDepth()
+	{
+		$result = $this->Menu->config('depth');
+		$this->assertNull($result);
+
+		$result = $this->Menu->getDepth();
+		$expected = [0, INF];
+		$this->assertEquals($expected, $result);
+	}
+
+	public function testSetDepth()
+	{
+		$depth = [0, 0];
+		$menu = $this->Menu->setDepth($depth);
+		$this->assertSame($this->Menu, $menu, 'Menu::setDepth() should return menu instance');
+
+		$result = $this->Menu->getDepth();
+		$this->assertEquals($depth, $result, 'Menu::getDepth() value should equal value set in Menu::setDepth()');
+
+		$result = $this->Menu->config('depth');
+		$this->assertEquals($depth, $result, 'Menu->config(\'depth\') should equal value set in Menu::setDepth()');
+	}
+
+	public function testRenderMaxDepthSimple()
+	{
+		$result = $this->Menu->config('depth', [0, 0])->render();
+		$expected = implode('', [
+			'<ul>',
+				'<li><a href="/about"><span>About</span></a></li>',
+				'<li><a href="/work"><span>Work</span></a></li>',
+				'<li><a href="/contact"><span>Contact</span></a></li>',
+			'</ul>'
+		]);
+		$this->assertEquals($expected, $result);
+	}
+
 	public function testFlattenedItems()
 	{
 		$expected = [
