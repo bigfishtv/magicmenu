@@ -108,8 +108,11 @@ class Menu
 
 	protected function _renderItem($item, array $path = [])
 	{
-		$here = $this->getActivePath() && !array_diff_assoc($this->getActivePath(), $path);
-		$active = $this->getActivePath() && count($this->getActivePath()) >= count($path) && !array_diff_assoc(array_slice($this->getActivePath(), 0, count($path)), $path);
+		$here = $this->getActivePath() &&
+		        !array_diff_assoc($this->getActivePath(), $path);
+		$active = $this->getActivePath() &&
+		          count($this->getActivePath()) >= count($path) &&
+		          !array_diff_assoc(array_slice($this->getActivePath(), 0, count($path)), $path);
 		$options = [
 			'class' => $active ? 'active' : null
 		];
