@@ -101,7 +101,22 @@ class Menu
 
 	public function render()
 	{
-		return $this->_renderWrapper($this->_items);
+		$items = $this->_items;
+		$path = [];
+		list($minDepth, $maxDepth) = $this->getDepth();
+		if ($minDepth > 0) {
+			$path = array_slice($this->getActivePath(), 0, $minDepth);
+			$item = $this->getItemAt($path);
+			if (!empty($item['children'])) {
+				$items = $item['children'];
+			} else {
+				$items = array();
+			}
+		}
+		if (!$items) {
+			return false;
+		}
+		return $this->_renderWrapper($items, $path);
 	}
 
 	protected function _renderWrapper(array $items, array $path = [])

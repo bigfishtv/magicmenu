@@ -186,6 +186,31 @@ class MenuTest extends TestCase
 		$this->assertEquals($expected, $result);
 	}
 
+	public function testRenderMinDepth()
+	{
+		$result = $this->Menu->setActivePath([1, 1])->setDepth([1, 1])->render();
+		$expected = implode('', [
+			'<ul>',
+				'<li><a href="/work/thiess"><span>Thiess</span></a></li>',
+				'<li><a href="/work/max-employment" class="active here"><span>MAX Employment</span></a></li>',
+				'<li><a href="/work/spike-and-dadda"><span>Spike &amp; Dadda</span></a></li>',
+			'</ul>',
+		]);
+		$this->assertEquals($expected, $result);
+	}
+
+	public function testRenderMinDepthNoActivePath()
+	{
+		$result = $this->Menu->setDepth([1, 1])->render();
+		$this->assertFalse($result);
+	}
+
+	public function testRenderMinDepthNoActiveParents()
+	{
+		$result = $this->Menu->setActivePath([0])->setDepth([1, 1])->render();
+		$this->assertFalse($result);
+	}
+
 	public function testFlattenedItems()
 	{
 		$expected = [
