@@ -13,7 +13,6 @@ class Menu
 	
 	protected $_defaultConfig = [
 		'depth' => null,
-        'errorClass' => 'error',
         'templates' => [
             'wrapper' => '<ul{{attrs}}>{{items}}</ul>',
 			'item' => '<li><a href="{{url}}"{{attrs}}><span>{{title}}</span></a>{{children}}</li>',
