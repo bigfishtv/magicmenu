@@ -66,11 +66,6 @@ class Menu
 		return false;
 	}
 
-	public function render()
-	{
-		return $this->renderWrapper($this->_items);
-	}
-
 	public function getFlattenedItems()
 	{
 		return $this->_flatten($this->_items);
@@ -90,10 +85,17 @@ class Menu
 		}, []);
 	}
 
-	public function renderWrapper(array $items)
+	public function render()
 	{
-		$items = array_map(function($item) {
-			return $this->renderItem($item);
+		return $this->_renderWrapper($this->_items);
+	}
+
+	protected function _renderWrapper(array $items, array $path = [])
+	{
+		$index = 0;
+		$items = array_map(function($item) use ($path, &$index) {
+			$path[] = $index++;
+			return $this->_renderItem($item, $path);
 		}, $items);
 		$options = [
 			//'class' => 'nav'
@@ -104,13 +106,15 @@ class Menu
         ]);
 	}
 
-	public function renderItem($item)
+	protected function _renderItem($item, array $path = [])
 	{
+		$here = $this->getActivePath() && !array_diff_assoc($this->getActivePath(), $path);
+		$active = $this->getActivePath() && count($this->getActivePath()) >= count($path) && !array_diff_assoc(array_slice($this->getActivePath(), 0, count($path)), $path);
 		$options = [
-			//'class' => 'active'
+			'class' => $active ? 'active' : null
 		];
 		if (!empty($item['children'])) {
-			$children = $this->renderWrapper($item['children']);
+			$children = $this->_renderWrapper($item['children'], $path);
 		} else {
 			$children = '';
 		}

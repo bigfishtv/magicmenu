@@ -80,6 +80,41 @@ class MenuTest extends TestCase
 		$this->assertEquals($expected, $result);
 	}
 
+	public function testRenderWithNestedActiveItem()
+	{
+		$result = $this->Menu->setActivePath([1, 1])->render();
+		$expected = implode('', [
+			'<ul>',
+				'<li><a href="/about"><span>About</span></a></li>',
+				'<li><a href="/work" class="active"><span>Work</span></a>',
+					'<ul>',
+						'<li><a href="/work/thiess"><span>Thiess</span></a></li>',
+						'<li><a href="/work/max-employment" class="active"><span>MAX Employment</span></a></li>',
+						'<li><a href="/work/spike-and-dadda"><span>Spike &amp; Dadda</span></a></li>',
+					'</ul>',
+				'</li>',
+				'<li><a href="/contact"><span>Contact</span></a></li>',
+			'</ul>'
+		]);
+		$this->assertEquals($expected, $result);
+
+		$result = $this->Menu->setActivePath([1])->render();
+		$expected = implode('', [
+			'<ul>',
+				'<li><a href="/about"><span>About</span></a></li>',
+				'<li><a href="/work" class="active"><span>Work</span></a>',
+					'<ul>',
+						'<li><a href="/work/thiess"><span>Thiess</span></a></li>',
+						'<li><a href="/work/max-employment"><span>MAX Employment</span></a></li>',
+						'<li><a href="/work/spike-and-dadda"><span>Spike &amp; Dadda</span></a></li>',
+					'</ul>',
+				'</li>',
+				'<li><a href="/contact"><span>Contact</span></a></li>',
+			'</ul>'
+		]);
+		$this->assertEquals($expected, $result);
+	}
+
 	public function testFlattenedItems()
 	{
 		$expected = [
