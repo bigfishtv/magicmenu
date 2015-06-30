@@ -89,7 +89,7 @@ class MenuTest extends TestCase
 				'<li><a href="/work" class="active"><span>Work</span></a>',
 					'<ul>',
 						'<li><a href="/work/thiess"><span>Thiess</span></a></li>',
-						'<li><a href="/work/max-employment" class="active"><span>MAX Employment</span></a></li>',
+						'<li><a href="/work/max-employment" class="active here"><span>MAX Employment</span></a></li>',
 						'<li><a href="/work/spike-and-dadda"><span>Spike &amp; Dadda</span></a></li>',
 					'</ul>',
 				'</li>',
@@ -102,7 +102,7 @@ class MenuTest extends TestCase
 		$expected = implode('', [
 			'<ul>',
 				'<li><a href="/about"><span>About</span></a></li>',
-				'<li><a href="/work" class="active"><span>Work</span></a>',
+				'<li><a href="/work" class="active here"><span>Work</span></a>',
 					'<ul>',
 						'<li><a href="/work/thiess"><span>Thiess</span></a></li>',
 						'<li><a href="/work/max-employment"><span>MAX Employment</span></a></li>',
