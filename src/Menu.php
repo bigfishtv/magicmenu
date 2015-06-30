@@ -68,16 +68,16 @@ class Menu
 
 	public function setDepth($depth)
 	{
-		return $this->config('depth', $depth);
+		return $this->config('depth', $depth, false);
 	}
 
 	public function getDepth()
 	{
 		$depth = $this->config('depth');
-		if (!$depth) {
-			return [0, INF];
+		if (is_array($depth) && count($depth) == 2) {
+			return $depth;
 		}
-		return $depth;
+		return [0, INF];
 	}
 
 	public function getFlattenedItems()

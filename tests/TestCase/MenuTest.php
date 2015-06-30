@@ -139,6 +139,38 @@ class MenuTest extends TestCase
 
 		$result = $this->Menu->config('depth');
 		$this->assertEquals($depth, $result, 'Menu->config(\'depth\') should equal value set in Menu::setDepth()');
+
+		$this->Menu->config('depth', [0, 2], false);
+		$this->Menu->config('depth', [4, 3], false);
+		$result = $this->Menu->config('depth');
+		$expected = [4, 3];
+		$this->assertEquals($expected, $result);
+
+		$this->Menu->setDepth([0, 2]);
+		$this->Menu->setDepth([4, 3]);
+		$result = $this->Menu->getDepth();
+		$expected = [4, 3];
+		$this->assertEquals($expected, $result);
+	}
+
+	public function testSetInvalidDepth()
+	{
+		$expected = [0, INF];
+
+		$result = $this->Menu->setDepth([0,1,2])->getDepth();
+		$this->assertEquals($expected, $result);
+
+		$result = $this->Menu->setDepth(3)->getDepth();
+		$this->assertEquals($expected, $result);
+
+		$result = $this->Menu->setDepth(null)->getDepth();
+		$this->assertEquals($expected, $result);
+
+		$result = $this->Menu->setDepth('random string')->getDepth();
+		$this->assertEquals($expected, $result);
+
+		$result = $this->Menu->setDepth(true)->getDepth();
+		$this->assertEquals($expected, $result);
 	}
 
 	public function testRenderMaxDepthSimple()
