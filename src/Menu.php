@@ -99,6 +99,11 @@ class Menu
 		}, []);
 	}
 
+	public function __toString()
+	{
+		return (string) $this->render();
+	}
+
 	public function render()
 	{
 		$items = $this->_items;
