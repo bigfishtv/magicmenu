@@ -101,7 +101,7 @@ class MenuTest extends TestCase
 
 	public function testMenuToStringInvalidDepth()
 	{
-		$result = (string) $this->Menu->setDepth([2,2]);
+		$result = (string) $this->Menu->setDepth([2, 2]);
 		$expected = '';
 		$this->assertSame($expected, $result);
 	}
@@ -183,7 +183,7 @@ class MenuTest extends TestCase
 	{
 		$expected = [0, INF];
 
-		$result = $this->Menu->setDepth([0,1,2])->getDepth();
+		$result = $this->Menu->setDepth([0, 1, 2])->getDepth();
 		$this->assertEquals($expected, $result);
 
 		$result = $this->Menu->setDepth(3)->getDepth();
