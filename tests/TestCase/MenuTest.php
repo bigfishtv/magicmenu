@@ -10,7 +10,13 @@ class MenuTest extends TestCase
 	public function setUp()
 	{
 		parent::setUp();
-		$items = [
+		$items = $this->getDefaultMenuItems();
+		$this->Menu = new Menu($items);
+	}
+
+	public function getDefaultMenuItems()
+	{
+		return [
 			['title' => 'About', 'url' => '/about'],
 			['title' => 'Work', 'url' => '/work', 'children' => [
 				['title' => 'Thiess', 'url' => '/work/thiess'],
@@ -19,7 +25,22 @@ class MenuTest extends TestCase
 			]],
 			['title' => 'Contact', 'url' => '/contact']
 		];
-		$this->Menu = new Menu($items);
+	}
+
+	public function getDeepMenuItems()
+	{	
+		$items = $this->getDefaultMenuItems();
+		// add children to /About
+		$items[0]['children'] = [
+			['title' => 'Team', 'url' => '/about/team'],
+		];
+		// add children to /Work/Thiess
+		$items[1]['children'][0]['children'] = [
+			['title' => 'Translate', 'url' => '/work/thiess/translate'],
+			['title' => '80 Years', 'url' => '/work/thiess/80-years'],
+			['title' => 'Website', 'url' => '/work/thiess/website'],
+		];
+		return $items;
 	}
 
 	public function tearDown()
@@ -225,6 +246,19 @@ class MenuTest extends TestCase
 		$this->assertEquals($expected, $result);
 	}
 
+	public function testRenderMinDepthWithoutActiveChildren()
+	{
+		$result = $this->Menu->setActivePath([1])->setDepth([1, 1])->render();
+		$expected = implode('', [
+			'<ul>',
+				'<li><a href="/work/thiess"><span>Thiess</span></a></li>',
+				'<li><a href="/work/max-employment"><span>MAX Employment</span></a></li>',
+				'<li><a href="/work/spike-and-dadda"><span>Spike &amp; Dadda</span></a></li>',
+			'</ul>',
+		]);
+		$this->assertEquals($expected, $result);
+	}
+
 	public function testRenderMinDepthNoActivePath()
 	{
 		$result = $this->Menu->setDepth([1, 1])->render();
@@ -235,6 +269,73 @@ class MenuTest extends TestCase
 	{
 		$result = $this->Menu->setActivePath([0])->setDepth([1, 1])->render();
 		$this->assertFalse($result);
+	}
+
+	public function testRenderDeepMenu()
+	{
+		$this->Menu->setItems($this->getDeepMenuItems());
+
+		$result = $this->Menu->render();
+		$expected = implode('', [
+			'<ul>',
+				'<li><a href="/about"><span>About</span></a>',
+					'<ul>',
+						'<li><a href="/about/team"><span>Team</span></a></li>',
+					'</ul>',
+				'</li>',
+				'<li><a href="/work"><span>Work</span></a>',
+					'<ul>',
+						'<li><a href="/work/thiess"><span>Thiess</span></a>',
+							'<ul>',
+								'<li><a href="/work/thiess/translate"><span>Translate</span></a></li>',
+								'<li><a href="/work/thiess/80-years"><span>80 Years</span></a></li>',
+								'<li><a href="/work/thiess/website"><span>Website</span></a></li>',
+							'</ul>',
+						'</li>',
+						'<li><a href="/work/max-employment"><span>MAX Employment</span></a></li>',
+						'<li><a href="/work/spike-and-dadda"><span>Spike &amp; Dadda</span></a></li>',
+					'</ul>',
+				'</li>',
+				'<li><a href="/contact"><span>Contact</span></a></li>',
+			'</ul>',
+		]);
+		$this->assertEquals($expected, $result);
+	}
+
+	public function testRenderDeepMenuMinMaxDepth()
+	{
+		$this->Menu->setItems($this->getDeepMenuItems());
+
+		$result = $this->Menu->setActivePath([1, 0, 2])->setDepth([1, 2])->render();
+		$expected = implode('', [
+			'<ul>',
+				'<li><a href="/work/thiess" class="active"><span>Thiess</span></a>',
+					'<ul>',
+						'<li><a href="/work/thiess/translate"><span>Translate</span></a></li>',
+						'<li><a href="/work/thiess/80-years"><span>80 Years</span></a></li>',
+						'<li><a href="/work/thiess/website" class="active here"><span>Website</span></a></li>',
+					'</ul>',
+				'</li>',
+				'<li><a href="/work/max-employment"><span>MAX Employment</span></a></li>',
+				'<li><a href="/work/spike-and-dadda"><span>Spike &amp; Dadda</span></a></li>',
+			'</ul>',
+		]);
+		$this->assertEquals($expected, $result);
+	}
+
+	public function testRenderDeepMenuMinMaxDepthWithoutActiveChildren()
+	{
+		$this->Menu->setItems($this->getDeepMenuItems());
+
+		$result = $this->Menu->setActivePath([1, 0])->setDepth([2, INF])->render();
+		$expected = implode('', [
+			'<ul>',
+				'<li><a href="/work/thiess/translate"><span>Translate</span></a></li>',
+				'<li><a href="/work/thiess/80-years"><span>80 Years</span></a></li>',
+				'<li><a href="/work/thiess/website"><span>Website</span></a></li>',
+			'</ul>'
+		]);
+		$this->assertEquals($expected, $result);
 	}
 
 	public function testFlattenedItems()
