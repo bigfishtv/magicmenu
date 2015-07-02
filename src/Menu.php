@@ -163,11 +163,11 @@ class Menu
 			$children = '';
 		}
 		return $this->formatTemplate('item', [
-			'title' => h($item['title']),
-			'url' => $item['url'],
+			'title' => isset($item['title']) ? h($item['title']) : '',
+			'url' => isset($item['url']) ? $item['url'] : '',
 			'attrs' => $this->templater()->formatAttributes($options),
 			'children' => $children,
-		]);
+		] + $item);
 	}
 
 }

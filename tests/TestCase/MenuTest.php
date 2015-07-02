@@ -438,4 +438,38 @@ class MenuTest extends TestCase
 		$this->assertEquals($expected, $result);
 	}
 
+	public function testRenderCustomItemAttributeAndNoTitleOrUrl()
+	{
+		$templates = [
+			'item' => '<li>{{crazy_title}}</li>',
+		];
+		$items = [
+			['crazy_title' => 'Random unescaped & title']
+		];
+		$expected = implode('', [
+			'<ul>',
+				'<li>Random unescaped & title</li>',
+			'</ul>',
+		]);
+		$result = $this->Menu->setItems($items)->templates($templates)->render();
+		$this->assertEquals($expected, $result);
+	}
+
+	public function testRenderUndefinedCustomItemAttribute()
+	{
+		$templates = [
+			'item' => '<li>{{crazy_title}}</li>',
+		];
+		$items = [
+			['title' => 'Random unescaped & title']
+		];
+		$expected = implode('', [
+			'<ul>',
+				'<li></li>',
+			'</ul>',
+		]);
+		$result = $this->Menu->setItems($items)->templates($templates)->render();
+		$this->assertEquals($expected, $result);
+	}
+
 }

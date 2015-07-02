@@ -3,11 +3,7 @@
 - Allow an item to be made active, but not printed in the output (display/render = false)
 	- don't display children if no active children
 
-- allow items to not have title & url keys
-
 - find appropriate url from children if no url exists in item
-
-- add seperator functionality?
 
 - config options
 	- activeClass
@@ -17,8 +13,6 @@
 	- beforerender callback (check cake patterns)
 	= LEVEL OVERRIDE FOR ALL OPTIONS AND TEMPLATES
 
-- support generic/custom item attributes
-
 - make siblingCount key available to template (siblingCount does not include hidden siblings)
 
 - make class/className key available to template? 
@@ -26,3 +20,10 @@
 - support arrays in url key
 
 - setItems should automatically setActivePath, with a param to prevent this behaviour
+
+
+
+
+DONE
+
+- add seperator functionality?
