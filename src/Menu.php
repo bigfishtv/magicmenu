@@ -164,6 +164,7 @@ class Menu
 		}
 		return $this->formatTemplate('item', [
 			'title' => isset($item['title']) ? h($item['title']) : '',
+			'unescapedTitle' => isset($item['title']) ? $item['title'] : '',
 			'url' => isset($item['url']) ? $item['url'] : '',
 			'attrs' => $this->templater()->formatAttributes($options),
 			'children' => $children,

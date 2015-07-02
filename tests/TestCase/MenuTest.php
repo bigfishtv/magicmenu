@@ -472,4 +472,21 @@ class MenuTest extends TestCase
 		$this->assertEquals($expected, $result);
 	}
 
+	public function testRenderUnescapedTitle()
+	{
+		$templates = [
+			'item' => '<li>{{unescapedTitle}}</li>',
+		];
+		$items = [
+			['title' => 'Unescaped &']
+		];
+		$expected = implode('', [
+			'<ul>',
+				'<li>Unescaped &</li>',
+			'</ul>',
+		]);
+		$result = $this->Menu->setItems($items)->templates($templates)->render();
+		$this->assertEquals($expected, $result);
+	}
+
 }
