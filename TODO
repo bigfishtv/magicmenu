@@ -1,6 +1,6 @@
 - Path matching class (setActivePath()), with ability to supply custom matching class
 
-- Allow an item to be made active, but not printed in the output (display/render = false)
+- Allow an item to be made active, but not printed in the output (display/render/visible = false, hidden = true)
 	- don't display children if no active children
 
 - find appropriate url from children if no url exists in item
@@ -8,7 +8,6 @@
 - config options
 	- activeClass
 	- hereClass
-	- escapeTitle ?? check cake patterns
 	- include children when inactive (find a better name?)
 	- beforerender callback (check cake patterns)
 	= LEVEL OVERRIDE FOR ALL OPTIONS AND TEMPLATES
@@ -19,11 +18,5 @@
 
 - support arrays in url key
 
-- setItems should automatically setActivePath, with a param to prevent this behaviour
+- setItems should automatically setActivePath (calling path matching class), with a param to prevent this behaviour
 
-
-
-
-DONE
-
-- add seperator functionality?
