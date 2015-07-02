@@ -17,4 +17,4 @@
 - support arrays in url key
 
 - setItems should automatically setActivePath (calling path matching class), with a param to prevent this behaviour
-
+	- ensure a test exists that proves config() is required before setItems() in Menu constructor
