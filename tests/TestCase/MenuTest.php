@@ -506,4 +506,28 @@ class MenuTest extends TestCase
 		$this->assertEquals($expected, $result);
 	}
 
+	public function testRenderUrl()
+	{
+		$items = [
+			['title' => 'One', 'children' => [
+				['title' => 'OneChild', 'url' => '/one/child'],
+			]],
+			['title' => 'Two', 'url' => false, 'children' => [
+				['title' => 'TwoChild', 'url' => '/two/child'],
+			]],
+			['title' => 'Three', 'url' => null, 'children' => [
+				['title' => 'ThreeChild', 'url' => '/three/child'],
+			]],
+			['title' => 'Four', 'children' => [
+				['title' => 'FourChild'],
+				['title' => 'FourChild2', 'url' => '/four/child2'],
+			]],
+			['title' => 'Five', 'children' => [
+				['title' => 'FiveChild', 'children' => [
+					['title' => 'FiveGrandchild', 'url' => '/five/grandchild']
+				]],
+			]],
+		];
+	}
+
 }

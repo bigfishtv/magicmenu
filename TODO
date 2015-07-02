@@ -4,7 +4,8 @@
 	- don't display children if no active children
 
 - find appropriate url from children if no url exists in item
-
+	 - add config option to disable this behavior
+	 
 - config options
 	- include children when inactive (find a better name?)
 	- beforerender callback (check cake patterns)
