@@ -28,8 +28,8 @@ class Menu
 
 	public function __construct(array $items = [], array $options = [])
 	{
-		$this->setItems($items);
 		$this->config($options);
+		$this->setItems($items);
 	}
 
 	public function setItems(array $items)
