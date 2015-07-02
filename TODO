@@ -6,8 +6,6 @@
 - find appropriate url from children if no url exists in item
 
 - config options
-	- activeClass
-	- hereClass
 	- include children when inactive (find a better name?)
 	- beforerender callback (check cake patterns)
 	= LEVEL OVERRIDE FOR ALL OPTIONS AND TEMPLATES
