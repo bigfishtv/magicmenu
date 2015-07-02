@@ -12,6 +12,8 @@ class Menu
 	use InstanceConfigTrait;
 	
 	protected $_defaultConfig = [
+		'activeClass' => 'active',
+		'hereClass' => 'here',
 		'depth' => null,
         'templates' => [
         	'wrapper' => '<ul{{attrs}}>{{items}}</ul>',
@@ -148,10 +150,10 @@ class Menu
 		$active = array_slice($this->getActivePath(), 0, count($path)) == $path;
 		$class = [];
 		if ($active) {
-			$class[] = 'active';
+			$class[] = $this->config('activeClass');
 		}
 		if ($here) {
-			$class[] = 'here';
+			$class[] = $this->config('hereClass');
 		}
 		$options = [
 			'class' => $class ? implode(' ', $class) : null

@@ -489,4 +489,21 @@ class MenuTest extends TestCase
 		$this->assertEquals($expected, $result);
 	}
 
+	public function testRenderCustomActiveClasses()
+	{
+		$this->Menu->config([
+			'hereClass' => 'there',
+			'activeClass' => 'hold & on'
+		]);
+		$result = $this->Menu->setDepth([0, 0])->setActivePath([1])->render();
+		$expected = implode('', [
+			'<ul>',
+				'<li><a href="/about"><span>About</span></a></li>',
+				'<li><a href="/work" class="hold &amp; on there"><span>Work</span></a></li>',
+				'<li><a href="/contact"><span>Contact</span></a></li>',
+			'</ul>'
+		]);
+		$this->assertEquals($expected, $result);
+	}
+
 }
