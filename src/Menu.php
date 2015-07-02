@@ -14,8 +14,9 @@ class Menu
 	protected $_defaultConfig = [
 		'depth' => null,
         'templates' => [
-            'wrapper' => '<ul{{attrs}}>{{items}}</ul>',
+        	'wrapper' => '<ul{{attrs}}>{{items}}</ul>',
 			'item' => '<li><a href="{{url}}"{{attrs}}><span>{{title}}</span></a>{{children}}</li>',
+			'separator' => '',
         ],
     ];
 
@@ -134,9 +135,10 @@ class Menu
 		$options = [
 			//'class' => 'nav'
 		];
+		$separator = $this->formatTemplate('separator', []);
 		return $this->formatTemplate('wrapper', [
             'attrs' => $this->templater()->formatAttributes($options),
-            'items' => implode('', $items),
+            'items' => implode($separator, $items),
         ]);
 	}
 

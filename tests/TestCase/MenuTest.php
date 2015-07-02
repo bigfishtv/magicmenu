@@ -418,4 +418,24 @@ class MenuTest extends TestCase
 		$this->assertFalse($result);
 	}
 
+	public function testRenderWithSeparator()
+	{
+		$templates = [
+			'separator' => '<hr>',
+			'wrapper' => '<div class="content">{{items}}</div>',
+			'item' => '<h1>{{title}}</h1>',
+		];
+		$result = $this->Menu->templates($templates)->render();
+		$expected = implode('', [
+			'<div class="content">',
+				'<h1>About</h1>',
+				'<hr>',
+				'<h1>Work</h1>',
+				'<hr>',
+				'<h1>Contact</h1>',
+			'</div>',
+		]);
+		$this->assertEquals($expected, $result);
+	}
+
 }
