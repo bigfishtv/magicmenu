@@ -10,6 +10,12 @@
     stopOnFailure="false"
     syntaxCheck="true"
     bootstrap="tests/bootstrap.php">
+    
+    <filter>
+        <blacklist>
+              <directory>vendor</directory>
+        </blacklist>
+    </filter>
 
     <testsuites>
         <testsuite name="Tests">
