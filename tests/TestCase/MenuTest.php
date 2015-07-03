@@ -665,4 +665,19 @@ class MenuTest extends TestCase
 		$this->assertEquals($expected, $result);
 	}
 
+	// TODO: implement this functionality
+	public function ______testRenderWithArrayUrl()
+	{	
+		$items = [
+			['title' => 'Page', 'url' => ['controller' => 'something', 'action' => 'view']],
+		];
+		$result = $this->Menu->setItems($items)->render();
+		$expected = implode('', [
+			'<ul>',
+				'<li><a href="/something/view"><span>Page</span></a></li>',
+			'</ul>'
+		]);
+		$this->assertEquals($expected, $result);
+	}
+
 }
