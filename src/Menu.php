@@ -15,11 +15,12 @@ class Menu
 		'activeClass' => 'active',
 		'hereClass' => 'here',
 		'depth' => null,
-        'templates' => [
-        	'wrapper' => '<ul{{attrs}}>{{items}}</ul>',
+		'emptyUrl' => 'javascript:void(0);',
+		'templates' => [
+			'wrapper' => '<ul{{attrs}}>{{items}}</ul>',
 			'item' => '<li><a href="{{url}}"{{attrs}}><span>{{title}}</span></a>{{children}}</li>',
 			'separator' => '',
-        ],
+		],
     ];
 
 	protected $_items = [];
@@ -118,13 +119,23 @@ class Menu
 			if (!empty($item['children'])) {
 				$items = $item['children'];
 			} else {
-				$items = array();
+				$items = [];
 			}
 		}
 		if (!$items) {
 			return false;
 		}
 		return $this->_renderWrapper($items, $path);
+	}
+
+	public function getItemUrl($item)
+	{
+		if (!isset($item['url']) && !empty($item['children'][0])) {
+			return $this->getItemUrl($item['children'][0]);
+		} else if (!empty($item['url'])) {
+			return $item['url'];
+		}
+		return false;
 	}
 
 	protected function _renderWrapper(array $items, array $path = [])
@@ -139,9 +150,9 @@ class Menu
 		];
 		$separator = $this->formatTemplate('separator', []);
 		return $this->formatTemplate('wrapper', [
-            'attrs' => $this->templater()->formatAttributes($options),
-            'items' => implode($separator, $items),
-        ]);
+			'attrs' => $this->templater()->formatAttributes($options),
+			'items' => implode($separator, $items),
+		]);
 	}
 
 	protected function _renderItem($item, array $path = [])
@@ -167,7 +178,7 @@ class Menu
 		return $this->formatTemplate('item', [
 			'title' => isset($item['title']) ? h($item['title']) : '',
 			'unescapedTitle' => isset($item['title']) ? $item['title'] : '',
-			'url' => isset($item['url']) ? $item['url'] : '',
+			'url' => $this->getItemUrl($item) ?: $this->config('emptyUrl'),
 			'attrs' => $this->templater()->formatAttributes($options),
 			'children' => $children,
 		] + $item);

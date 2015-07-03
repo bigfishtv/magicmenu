@@ -506,28 +506,162 @@ class MenuTest extends TestCase
 		$this->assertEquals($expected, $result);
 	}
 
-	public function testRenderUrl()
+	public function testGetItemUrlString()
+	{
+		$item = ['url' => '/my/url'];
+		$result = $this->Menu->getItemUrl($item);
+		$expected = '/my/url';
+		$this->assertEquals($expected, $result);
+	}
+
+	public function testGetItemUrlNull()
+	{
+		$item = ['url' => null];
+		$result = $this->Menu->getItemUrl($item);
+		$this->assertFalse($result);
+	}
+
+	public function testGetItemUrlEmptyString()
+	{
+		$item = ['url' => ''];
+		$result = $this->Menu->getItemUrl($item);
+		$this->assertFalse($result);
+	}
+
+	public function testGetItemUrlArray()
+	{
+		$url = ['controller' => 'fake', 'action' => 'fake'];
+		$item = ['url' => $url];
+		$result = $this->Menu->getItemUrl($item);
+		$this->assertEquals($result, $url);
+	}
+
+	public function testGetItemUrlUndefined()
+	{
+		$result = $this->Menu->getItemUrl([]);
+		$this->assertFalse($result);
+	}
+
+	public function testGetItemUrlNested()
+	{
+		$item = [
+			'children' => [
+				['children' => [
+					['children' => [
+						['url' => '/nested']
+					]]
+				]]
+			]
+		];
+		$result = $this->Menu->getItemUrl($item);
+		$expected = '/nested';
+		$this->assertEquals($expected, $result);
+	}
+
+	public function testGetItemUrlNestedWithEmptyString()
+	{
+		$item = [
+			'children' => [[
+				'url' => '',
+				'children' => [
+					['children' => [
+						['url' => '/nested']
+					]]
+				]]
+			]
+		];
+		$result = $this->Menu->getItemUrl($item);
+		$this->assertFalse($result, 'Empty string should return false and not inherit from child');
+	}
+
+	public function testRenderUrlAttributeInheritance()
 	{
 		$items = [
+			// should inherit from child
 			['title' => 'One', 'children' => [
 				['title' => 'OneChild', 'url' => '/one/child'],
 			]],
+			// should not inherit from child
 			['title' => 'Two', 'url' => false, 'children' => [
 				['title' => 'TwoChild', 'url' => '/two/child'],
 			]],
+			// should inherit from child
 			['title' => 'Three', 'url' => null, 'children' => [
 				['title' => 'ThreeChild', 'url' => '/three/child'],
 			]],
+			// will be empty because can't inherit from first child
 			['title' => 'Four', 'children' => [
 				['title' => 'FourChild'],
 				['title' => 'FourChild2', 'url' => '/four/child2'],
 			]],
+			// should inherit from grandchild
 			['title' => 'Five', 'children' => [
 				['title' => 'FiveChild', 'children' => [
 					['title' => 'FiveGrandchild', 'url' => '/five/grandchild']
 				]],
+				['title' => 'FiveChild2', 'url' => '/five/child2'],
+			]],
+			// should not inherit from child
+			['title' => 'Six', 'url' => '', 'children' => [
+				['title' => 'SixChild', 'url' => '/six/child'],
 			]],
 		];
+		$result = $this->Menu->setItems($items)->render();
+		$expected = implode('', [
+			'<ul>',
+				'<li><a href="/one/child"><span>One</span></a>',
+					'<ul>',
+						'<li><a href="/one/child"><span>OneChild</span></a></li>',
+					'</ul>',
+				'</li>',
+				'<li><a href="javascript:void(0);"><span>Two</span></a>',
+					'<ul>',
+						'<li><a href="/two/child"><span>TwoChild</span></a></li>',
+					'</ul>',
+				'</li>',
+				'<li><a href="/three/child"><span>Three</span></a>',
+					'<ul>',
+						'<li><a href="/three/child"><span>ThreeChild</span></a></li>',
+					'</ul>',
+				'</li>',
+				'<li><a href="javascript:void(0);"><span>Four</span></a>',
+					'<ul>',
+						'<li><a href="javascript:void(0);"><span>FourChild</span></a></li>',
+						'<li><a href="/four/child2"><span>FourChild2</span></a></li>',
+					'</ul>',
+				'</li>',
+				'<li><a href="/five/grandchild"><span>Five</span></a>',
+					'<ul>',
+						'<li><a href="/five/grandchild"><span>FiveChild</span></a>',
+							'<ul>',
+								'<li><a href="/five/grandchild"><span>FiveGrandchild</span></a></li>',
+							'</ul>',
+						'</li>',
+						'<li><a href="/five/child2"><span>FiveChild2</span></a></li>',
+					'</ul>',
+				'</li>',
+				'<li><a href="javascript:void(0);"><span>Six</span></a>',
+					'<ul>',
+						'<li><a href="/six/child"><span>SixChild</span></a></li>',
+					'</ul>',
+				'</li>',
+			'</ul>'
+		]);
+		$this->assertEquals($expected, $result);
+	}
+
+	public function testRenderWithEmptyUrlConfig()
+	{
+		$items = [
+			['title' => 'Undefined url']
+		];
+		$result = $this->Menu->setItems($items)->config('emptyUrl', '#')->render();
+		$expected = implode('', [
+			'<ul>',
+				'<li><a href="#"><span>Undefined url</span></a></li>',
+			'</ul>'
+		]);
+		$this->assertEquals($expected, $result);
 	}
 
 }
