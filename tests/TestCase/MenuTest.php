@@ -14,6 +14,12 @@ class MenuTest extends TestCase
 		$this->Menu = new Menu($items);
 	}
 
+	public function tearDown()
+	{
+		parent::tearDown();
+		unset($this->Menu);
+	}
+
 	public function getDefaultMenuItems()
 	{
 		return [
@@ -41,11 +47,6 @@ class MenuTest extends TestCase
 			['title' => 'Website', 'url' => '/work/thiess/website'],
 		];
 		return $items;
-	}
-
-	public function tearDown()
-	{
-		unset($this->Menu);
 	}
 
 	public function testSetItems()
