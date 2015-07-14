@@ -10,27 +10,31 @@ class MagicMenuHelper extends Helper
     protected $_instances = [];
 
     protected $_defaultConfig = [
-        'menuClass' => 'MagicMenu\Menu'
+        'Menu' => 'MagicMenu\Menu',
     ];
 
-    public function create(array $items = [], array $options = [])
+    public function create(array $items = [], array $options = [], $instanceName = null)
     {
-        $class = ArrayUtils::consume('menuClass', $options) ?: $this->config('menuClass');
-        $id = ArrayUtils::consume('id', $options);
-        
-        $menu = new $class($items, $options);
+        $Menu = $this->config('Menu');
+        $menu = new $Menu($items, $options);
 
-        if (!is_null($id)) {
-            $this->_instances[$id] = $menu;
+        if (!is_null($instanceName)) {
+            $this->setMenu($instanceName, $menu);
         }
 
         return $menu;
     }
 
-    public function get($id)
+    public function setMenu($instanceName, $menu)
     {
-        if (!empty($this->_instances[$id])) {
-            return $this->_instances[$id];
+        $this->_instances[$instanceName] = $menu;
+        return $this;
+    }
+
+    public function getMenu($instanceName)
+    {
+        if (!empty($this->_instances[$instanceName])) {
+            return $this->_instances[$instanceName];
         }
         return false;
     }
