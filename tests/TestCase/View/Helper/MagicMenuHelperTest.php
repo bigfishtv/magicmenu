@@ -11,6 +11,7 @@ class MagicMenuHelperTest extends TestCase {
 	{
 		parent::setUp();
 		$this->View = $this->getMock('Cake\View\View');
+		$this->View->request->url = '/dummy/path';
 		$this->MagicMenu = new MagicMenuHelper($this->View);
 	}
 
@@ -69,6 +70,26 @@ class MagicMenuHelperTest extends TestCase {
 
 		$result = $this->MagicMenu->getMenu('something');
 		$this->assertSame($menu, $result, 'MagicMenuHelper::getMenu should return menu instance from MagicMenuHelper::setMenu');
+	}
+
+	public function testCreateUrlBuilder()
+	{
+		$urlBuilder = $this->MagicMenu->create()->getUrlBuilder();
+		$result = get_class($urlBuilder);
+		$expected = 'MagicMenu\CakeUrlBuilder';
+		$this->assertEquals($expected, $result);
+	}
+
+	public function testCreatePathStrategy()
+	{
+		$pathStrategy = $this->MagicMenu->create()->getPathStrategy();
+		$result = get_class($pathStrategy);
+		$expected = 'MagicMenu\CakePathStrategy';
+		$this->assertEquals($expected, $result);
+
+		$result = $pathStrategy->getUrl();
+		$expected = '/dummy/path';
+		$this->assertEquals($expected, $result);
 	}
 
 }

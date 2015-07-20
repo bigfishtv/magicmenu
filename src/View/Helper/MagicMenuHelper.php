@@ -1,6 +1,8 @@
 <?php
 namespace MagicMenu\View\Helper;
 
+use MagicMenu\CakePathStrategy;
+use MagicMenu\CakeUrlBuilder;
 use MagicMenu\Utility\ArrayUtils;
 
 use Cake\View\Helper;
@@ -17,6 +19,9 @@ class MagicMenuHelper extends Helper
     {
         $Menu = $this->config('Menu');
         $menu = new $Menu($items, $options);
+
+        $menu->setUrlBuilder(new CakeUrlBuilder());
+        $menu->setPathStrategy(new CakePathStrategy($this->request->url));
 
         if (!is_null($instanceName)) {
             $this->setMenu($instanceName, $menu);
