@@ -4,6 +4,8 @@ namespace MagicMenu;
 use Cake\Core\InstanceConfigTrait;
 use Cake\View\StringTemplateTrait;
 
+use MagicMenu\Contracts\PathStrategy;
+use MagicMenu\Contracts\UrlBuilder;
 use MagicMenu\Utility\ArrayUtils;
 
 class Menu
@@ -27,10 +29,35 @@ class Menu
 
 	protected $_activePath = [];
 
+	protected $_pathStrategy;
+	protected $_urlBuilder;
+
 	public function __construct(array $items = [], array $options = [])
 	{
 		$this->config($options);
 		$this->setItems($items);
+	}
+
+	public function setPathStrategy(PathStrategy $pathStrategy)
+	{
+		$this->_pathStrategy = $pathStrategy;
+		return $this;
+	}
+
+	public function getPathStrategy()
+	{
+		return $this->_pathStrategy;
+	}
+
+	public function setUrlBuilder(UrlBuilder $urlBuilder)
+	{
+		$this->_urlBuilder = $urlBuilder;
+		return $this;
+	}
+
+	public function getUrlBuilder()
+	{
+		return $this->_urlBuilder;
 	}
 
 	public function setItems(array $items)

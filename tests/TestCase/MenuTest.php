@@ -372,6 +372,28 @@ class MenuTest extends TestCase
 		$this->assertEquals($expected, $result);
 	}
 
+	public function testSetPathStrategy()
+	{
+		$pathStrategy = new MockPathStrategy();
+
+		$menu = $this->Menu->setPathStrategy($pathStrategy);
+		$this->assertEquals($menu, $this->Menu, 'Menu::setPathStrategy() should return Menu instance');
+
+		$result = $this->Menu->getPathStrategy();
+		$this->assertEquals($result, $pathStrategy, 'Menu::getPathStrategy() should match the items in Menu::setPathStrategy()');
+	}
+
+	public function testSetUrlBuilder()
+	{
+		$urlBuilder = new MockUrlBuilder();
+
+		$menu = $this->Menu->setUrlBuilder($urlBuilder);
+		$this->assertEquals($menu, $this->Menu, 'Menu::setUrlBuilder() should return Menu instance');
+
+		$result = $this->Menu->getUrlBuilder();
+		$this->assertEquals($result, $urlBuilder, 'Menu::getUrlBuilder() should match the items in Menu::setUrlBuilder()');
+	}
+
 	public function testSetActivePath()
 	{
 		$path = [1, 2];
@@ -678,6 +700,26 @@ class MenuTest extends TestCase
 			'</ul>'
 		]);
 		$this->assertEquals($expected, $result);
+	}
+
+}
+
+class MockPathStrategy implements \MagicMenu\Contracts\PathStrategy
+{
+
+	public function getActivePath(array $items)
+	{
+		return [1, 2];
+	}
+
+}
+
+class MockUrlBuilder implements \MagicMenu\Contracts\UrlBuilder
+{
+
+	public function getItemUrl($item)
+	{
+		return $item['url'];
 	}
 
 }
