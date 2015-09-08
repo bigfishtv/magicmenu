@@ -17,13 +17,8 @@ class CakePathStrategyTest extends TestCase
 		Router::$initialized = true;
 		Router::scope('/', function ($routes) {
 		    $routes->connect('/', ['controller' => 'pages', 'action' => 'display', 'home']);
-
-
 		    $routes->connect('/some/path', ['controller' => 'random', 'action' => 'stuff']);
 			$routes->connect('/*', ['controller' => 'Pages', 'action' => 'display']);
-
-		    //$routes->connect('/some_alias', ['controller' => 'tests_apps', 'action' => 'some_method']);
-		    //$routes->fallbacks();
 		});
 
 		$this->Strategy = new CakePathStrategy();
@@ -66,6 +61,28 @@ class CakePathStrategyTest extends TestCase
 				'path' => [2],
 				'item' => ['title' => 'Contact', 'url' => '/contact'],
 			]
+		];
+	}
+
+	protected function getBasicQuerystringMenuItems()
+	{
+		return [
+			[
+				'path' => [0],
+				'item' => ['url' => '/'],
+			],
+			[
+				'path' => [1],
+				'item' => ['url' => '/?page=1'],
+			],
+			[
+				'path' => [2],
+				'item' => ['url' => '/?page=2'],
+			],
+			[
+				'path' => [2, 0],
+				'item' => ['url' => '/?page=2&pageSize=50'],
+			],
 		];
 	}
 
@@ -146,6 +163,28 @@ class CakePathStrategyTest extends TestCase
 		$this->assertEquals($expected, $result);
 	}
 
+	// TODO: implement this functionality (and verify test is correct)
+	// public function testQuerystringValues()
+	// {
+	// 	$url = '/?lang=es&page=1';
+	// 	$result = $this->Strategy->setUrl($url)->getActivePath($this->getBasicQuerystringMenuItems());
+	// 	$expected = [1];
+	// 	$this->assertEquals($expected, $result);
 
+	// 	$url = '/?lang=es';
+	// 	$result = $this->Strategy->setUrl($url)->getActivePath($this->getBasicQuerystringMenuItems());
+	// 	$expected = [0];
+	// 	$this->assertEquals($expected, $result);
+
+	// 	$url = '/?page=2&pageSize=10';
+	// 	$result = $this->Strategy->setUrl($url)->getActivePath($this->getBasicQuerystringMenuItems());
+	// 	$expected = [2];
+	// 	$this->assertEquals($expected, $result);
+
+	// 	$url = '/?pageSize=50';
+	// 	$result = $this->Strategy->setUrl($url)->getActivePath($this->getBasicQuerystringMenuItems());
+	// 	$expected = [0];
+	// 	$this->assertEquals($expected, $result);
+	// }
 
 };

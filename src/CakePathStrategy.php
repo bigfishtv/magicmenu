@@ -82,9 +82,10 @@ class CakePathStrategy implements \MagicMenu\Contracts\PathStrategy
 				continue;
 			}
 
-			if (!empty($parsed['?']) && !empty($item['parsed']['?'])) {
-				$score += count(array_intersect_assoc($parsed['?'], $item['parsed']['?']));
-			}
+			// TODO: see note in test CakePathstrategyTest::testQuerystringValues
+			// if (!empty($parsed['?']) && !empty($item['parsed']['?'])) {
+			// 	$score += count(array_intersect_assoc($parsed['?'], $item['parsed']['?']));
+			// }
 
 			if ($score > $highscore) {
 				$highscore = $score;
