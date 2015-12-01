@@ -168,10 +168,13 @@ class Menu
 	protected function _renderWrapper(array $items, array $path = [])
 	{
 		$index = 0;
-		$items = array_map(function($item) use ($path, &$index) {
+		$items = array_filter(array_map(function($item) use ($path, &$index) {
 			$path[] = $index++;
+			if (isset($item['visible']) && ($item['visible'] === false || $item['visible'] === 0)) {
+				return false;
+			}
 			return $this->_renderItem($item, $path);
-		}, $items);
+		}, $items));
 		$options = [
 			//'class' => 'nav'
 		];

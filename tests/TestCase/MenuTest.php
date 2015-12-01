@@ -102,6 +102,26 @@ class MenuTest extends TestCase
 		$this->assertEquals($expected, $result);
 	}
 
+	public function testRenderVisibleFalse()
+	{
+		$result = $this->Menu->setItems([
+			['title' => 'About', 'url' => '/about'],
+			['title' => 'Work', 'url' => '/work', 'visible' => false, 'children' => [
+				['title' => 'Thiess', 'url' => '/work/thiess'],
+				['title' => 'MAX Employment', 'url' => '/work/max-employment'],
+				['title' => 'Spike & Dadda', 'url' => '/work/spike-and-dadda'],
+			]],
+			['title' => 'Contact', 'url' => '/contact']
+		])->setActivePath([1, 2])->render();
+		$expected = implode('', [
+			'<ul>',
+				'<li><a href="/about"><span>About</span></a></li>',
+				'<li><a href="/contact"><span>Contact</span></a></li>',
+			'</ul>'
+		]);
+		$this->assertEquals($expected, $result);
+	}
+
 	public function testMenuToString()
 	{
 		$result = (string) $this->Menu;
