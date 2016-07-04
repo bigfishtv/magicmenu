@@ -21,7 +21,7 @@ class MagicMenuHelper extends Helper
         $menu = new $Menu($items, $options);
 
         $menu->setUrlBuilder(new CakeUrlBuilder());
-        $menu->setPathStrategy(new CakePathStrategy($this->request->url));
+        $menu->setPathStrategy(new CakePathStrategy($this->request->here));
 
         if (!is_null($instanceName)) {
             $this->setMenu($instanceName, $menu);

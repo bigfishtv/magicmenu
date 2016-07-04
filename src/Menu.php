@@ -27,7 +27,7 @@ class Menu
 
 	protected $_items = [];
 
-	protected $_activePath = [];
+	protected $_activePath = null;
 
 	protected $_pathStrategy;
 	protected $_urlBuilder;
@@ -41,6 +41,7 @@ class Menu
 	public function setPathStrategy(PathStrategy $pathStrategy)
 	{
 		$this->_pathStrategy = $pathStrategy;
+		$this->_activePath = null;
 		return $this;
 	}
 
@@ -63,6 +64,7 @@ class Menu
 	public function setItems(array $items)
 	{
 		$this->_items = $items;
+		$this->_activePath = null;
 		return $this;
 	}
 
@@ -79,7 +81,10 @@ class Menu
 
 	public function getActivePath()
 	{
-		return $this->_activePath;
+		if (is_null($this->_activePath) && $this->_pathStrategy) {
+			$this->_activePath = $this->_pathStrategy->getActivePath($this->getFlattenedItems());
+		}
+		return (array) $this->_activePath;
 	}
 
 	public function getItemAt(array $path)
