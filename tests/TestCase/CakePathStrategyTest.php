@@ -187,4 +187,4 @@ class CakePathStrategyTest extends TestCase
 	// 	$this->assertEquals($expected, $result);
 	// }
 
-};
+}
