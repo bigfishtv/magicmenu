@@ -38,7 +38,7 @@ class Menu
 		$this->setItems($items);
 	}
 
-	public function setPathStrategy(PathStrategy $pathStrategy)
+	public function setPathStrategy(PathStrategy $pathStrategy = null)
 	{
 		$this->_pathStrategy = $pathStrategy;
 		$this->_activePath = null;
