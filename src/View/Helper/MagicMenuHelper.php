@@ -1,11 +1,11 @@
 <?php
 namespace MagicMenu\View\Helper;
 
+use Cake\View\Helper;
+
 use MagicMenu\CakePathStrategy;
 use MagicMenu\CakeUrlBuilder;
 use MagicMenu\Utility\ArrayUtils;
-
-use Cake\View\Helper;
 
 class MagicMenuHelper extends Helper
 {
@@ -40,6 +40,7 @@ class MagicMenuHelper extends Helper
     public function setMenu($instanceName, $menu)
     {
         $this->_instances[$instanceName] = $menu;
+
         return $this;
     }
 
@@ -48,7 +49,7 @@ class MagicMenuHelper extends Helper
         if (!empty($this->_instances[$instanceName])) {
             return $this->_instances[$instanceName];
         }
+
         return false;
     }
-    
 }

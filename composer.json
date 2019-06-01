@@ -12,7 +12,8 @@
         "cakephp/cakephp": ">3.4.1"
 	},
     "require-dev": {
-        "phpunit/phpunit": "*"
+        "phpunit/phpunit": "*",
+        "cakephp/cakephp-codesniffer": "^3.1"
     },
     "autoload": {
         "psr-4": {"MagicMenu\\": "src/"}
