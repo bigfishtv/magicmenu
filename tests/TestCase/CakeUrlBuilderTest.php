@@ -9,7 +9,7 @@ use Cake\Routing\Router;
 
 class CakeUrlBuilderTest extends TestCase
 {
-	public function setUp()
+	public function setUp():void
 	{
 		parent::setUp();
 		
@@ -17,12 +17,6 @@ class CakeUrlBuilderTest extends TestCase
 		Router::connect('/some/url', ['controller' => 'random', 'action' => 'stuff']);
 
 		$this->CakeUrlBuilder = new CakeUrlBuilder();
-	}
-
-	public function tearDown()
-	{
-		parent::tearDown();
-		unset($this->CakeUrlBuilder);
 	}
 
 	public function testUrlBuilderString()

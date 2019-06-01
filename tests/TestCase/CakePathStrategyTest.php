@@ -9,12 +9,17 @@ use Cake\Routing\Router;
 
 class CakePathStrategyTest extends TestCase
 {
-	public function setUp()
+	public function setUp():void
 	{
 		parent::setUp();
 
 		Router::reload();
-		Router::$initialized = true;
+		
+		// maintain compatibility with CakePHP < 4.0
+		if (isset(Router::$initialized)) {
+			Router::$initialized = true;
+		}
+
 		Router::scope('/', function ($routes) {
 		    $routes->connect('/', ['controller' => 'pages', 'action' => 'display', 'home']);
 		    $routes->connect('/some/path', ['controller' => 'random', 'action' => 'stuff']);
@@ -22,12 +27,6 @@ class CakePathStrategyTest extends TestCase
 		});
 
 		$this->Strategy = new CakePathStrategy();
-	}
-
-	public function tearDown()
-	{
-		parent::tearDown();
-		unset($this->Strategy);
 	}
 
 	protected function getDefaultMenuItems()

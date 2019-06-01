@@ -3,21 +3,17 @@ namespace MagicMenu\Test;
 
 use MagicMenu\View\Helper\MagicMenuHelper;
 
+use Cake\Http\ServerRequest;
 use Cake\TestSuite\TestCase;
 
 class MagicMenuHelperTest extends TestCase {
 	
-	public function setUp()
+	public function setUp():void
 	{
 		parent::setUp();
-		$this->View = $this->getMock('Cake\View\View');
-		$this->View->request->url = '/dummy/path';
+		$request = new ServerRequest(['url' => '/dummy/path']);
+		$this->View = new \Cake\View\View($request);
 		$this->MagicMenu = new MagicMenuHelper($this->View);
-	}
-
-	public function tearDown()
-	{
-		unset($this->MagicMenu, $this->View);
 	}
 
 	public function testCreate()
@@ -35,7 +31,7 @@ class MagicMenuHelperTest extends TestCase {
 		$menu2 = $this->MagicMenu->getMenu('random');
 		$this->assertSame($menu, $menu2, 'MagicMenuHelper::getMenu should return a Menu instance');
 
-		$value = $menu->config('randomConfig');
+		$value = $menu->getConfig('randomConfig');
 		$expected = 'randomValue';
 		$this->assertEquals($expected, $value, '"randomConfig" key should be set on Menu instance');
 
@@ -50,7 +46,7 @@ class MagicMenuHelperTest extends TestCase {
 	public function testCustomClassWithConfig()
 	{
 		$menuClass = 'MagicMenu\Test\MockMenu';
-		$menu = $this->MagicMenu->config('Menu', $menuClass)->create();
+		$menu = $this->MagicMenu->setConfig('Menu', $menuClass)->create();
 		$this->assertEquals($menuClass, get_class($menu));
 	}
 

@@ -2,6 +2,7 @@
 namespace MagicMenu;
 
 use Cake\Routing\Router;
+use Cake\Http\ServerRequest;
 
 class CakePathStrategy implements \MagicMenu\Contracts\PathStrategy
 {
@@ -30,16 +31,18 @@ class CakePathStrategy implements \MagicMenu\Contracts\PathStrategy
 	 * @return array
 	 */
 	public function getActivePath(array $items)
-	{	
+	{
 		$normalized = Router::normalize($this->getUrl());
-		$parsed = Router::parse($normalized);
-
+		$request = new ServerRequest(['url' => $normalized]);
+		$parsed = Router::parseRequest($request);
+		
 		$items = array_filter(array_map(function($item) {
 			if (empty($item['item']['url'])) {
 				return false;
 			}
 			$normalized = Router::normalize($item['item']['url']);
-			$parsed = Router::parse($normalized);
+			$request = new ServerRequest(['url' => $normalized]);
+			$parsed = Router::parseRequest($request);
 			return array(
 				'path' => $item['path'],
 				'normalized' => $normalized,

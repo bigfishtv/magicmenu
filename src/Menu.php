@@ -34,7 +34,7 @@ class Menu
 
 	public function __construct(array $items = [], array $options = [])
 	{
-		$this->config($options);
+		$this->setConfig($options);
 		$this->setItems($items);
 	}
 
@@ -104,12 +104,12 @@ class Menu
 
 	public function setDepth($depth)
 	{
-		return $this->config('depth', $depth, false);
+		return $this->setConfig('depth', $depth, false);
 	}
 
 	public function getDepth()
 	{
-		$depth = $this->config('depth');
+		$depth = $this->getConfig('depth');
 		if (is_array($depth) && count($depth) == 2) {
 			return $depth;
 		}
@@ -196,10 +196,10 @@ class Menu
 		$active = array_slice($this->getActivePath(), 0, count($path)) == $path;
 		$class = [];
 		if ($active) {
-			$class[] = $this->config('activeClass');
+			$class[] = $this->getConfig('activeClass');
 		}
 		if ($here) {
-			$class[] = $this->config('hereClass');
+			$class[] = $this->getConfig('hereClass');
 		}
 		$options = [
 			'class' => $class ? implode(' ', $class) : null
@@ -213,7 +213,7 @@ class Menu
 		return $this->formatTemplate('item', [
 			'title' => isset($item['title']) ? h($item['title']) : '',
 			'unescapedTitle' => isset($item['title']) ? $item['title'] : '',
-			'url' => $this->getItemUrl($item) ?: $this->config('emptyUrl'),
+			'url' => $this->getItemUrl($item) ?: $this->getConfig('emptyUrl'),
 			'attrs' => $this->templater()->formatAttributes($options),
 			'children' => $children,
 		] + $item);

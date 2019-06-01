@@ -7,17 +7,11 @@ use Cake\TestSuite\TestCase;
 
 class MenuTest extends TestCase
 {
-	public function setUp()
+	public function setUp():void
 	{
 		parent::setUp();
 		$items = $this->getDefaultMenuItems();
 		$this->Menu = new Menu($items);
-	}
-
-	public function tearDown()
-	{
-		parent::tearDown();
-		unset($this->Menu);
 	}
 
 	public function getDefaultMenuItems()
@@ -79,7 +73,7 @@ class MenuTest extends TestCase
 		$result = $menu->getItems();
 		$this->assertEquals($result, $items, 'Menu::__construct should call setItems()');
 
-		$result = $menu->config('randomConfig');
+		$result = $menu->getConfig('randomConfig');
 		$this->assertEquals($result, $options['randomConfig'], 'Menu::__construct should call config()');
 	}
 
@@ -188,7 +182,7 @@ class MenuTest extends TestCase
 
 	public function testDefaultDepth()
 	{
-		$result = $this->Menu->config('depth');
+		$result = $this->Menu->getConfig('depth');
 		$this->assertNull($result);
 
 		$result = $this->Menu->getDepth();
@@ -205,12 +199,12 @@ class MenuTest extends TestCase
 		$result = $this->Menu->getDepth();
 		$this->assertEquals($depth, $result, 'Menu::getDepth() value should equal value set in Menu::setDepth()');
 
-		$result = $this->Menu->config('depth');
+		$result = $this->Menu->getConfig('depth');
 		$this->assertEquals($depth, $result, 'Menu->config(\'depth\') should equal value set in Menu::setDepth()');
 
-		$this->Menu->config('depth', [0, 2], false);
-		$this->Menu->config('depth', [4, 3], false);
-		$result = $this->Menu->config('depth');
+		$this->Menu->setConfig('depth', [0, 2], false);
+		$this->Menu->setConfig('depth', [4, 3], false);
+		$result = $this->Menu->getConfig('depth');
 		$expected = [4, 3];
 		$this->assertEquals($expected, $result);
 
@@ -243,7 +237,7 @@ class MenuTest extends TestCase
 
 	public function testRenderMaxDepthSimple()
 	{
-		$result = $this->Menu->config('depth', [0, 0])->render();
+		$result = $this->Menu->setConfig('depth', [0, 0])->render();
 		$expected = implode('', [
 			'<ul>',
 				'<li><a href="/about"><span>About</span></a></li>',
@@ -468,7 +462,7 @@ class MenuTest extends TestCase
 			'wrapper' => '<div class="content">{{items}}</div>',
 			'item' => '<h1>{{title}}</h1>',
 		];
-		$result = $this->Menu->templates($templates)->render();
+		$result = $this->Menu->setTemplates($templates)->render();
 		$expected = implode('', [
 			'<div class="content">',
 				'<h1>About</h1>',
@@ -494,7 +488,7 @@ class MenuTest extends TestCase
 				'<li>Random unescaped & title</li>',
 			'</ul>',
 		]);
-		$result = $this->Menu->setItems($items)->templates($templates)->render();
+		$result = $this->Menu->setItems($items)->setTemplates($templates)->render();
 		$this->assertEquals($expected, $result);
 	}
 
@@ -511,7 +505,7 @@ class MenuTest extends TestCase
 				'<li></li>',
 			'</ul>',
 		]);
-		$result = $this->Menu->setItems($items)->templates($templates)->render();
+		$result = $this->Menu->setItems($items)->setTemplates($templates)->render();
 		$this->assertEquals($expected, $result);
 	}
 
@@ -528,13 +522,13 @@ class MenuTest extends TestCase
 				'<li>Unescaped &</li>',
 			'</ul>',
 		]);
-		$result = $this->Menu->setItems($items)->templates($templates)->render();
+		$result = $this->Menu->setItems($items)->setTemplates($templates)->render();
 		$this->assertEquals($expected, $result);
 	}
 
 	public function testRenderCustomActiveClasses()
 	{
-		$this->Menu->config([
+		$this->Menu->setConfig([
 			'hereClass' => 'there',
 			'activeClass' => 'hold & on'
 		]);
@@ -698,7 +692,7 @@ class MenuTest extends TestCase
 		$items = [
 			['title' => 'Undefined url']
 		];
-		$result = $this->Menu->setItems($items)->config('emptyUrl', '#')->render();
+		$result = $this->Menu->setItems($items)->setConfig('emptyUrl', '#')->render();
 		$expected = implode('', [
 			'<ul>',
 				'<li><a href="#"><span>Undefined url</span></a></li>',
