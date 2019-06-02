@@ -1,58 +1,58 @@
 <?php
 namespace MagicMenu\Test;
 
-use MagicMenu\Utility\ArrayUtils;
-
 use Cake\TestSuite\TestCase;
+
+use MagicMenu\Utility\ArrayUtils;
 
 class ArrayUtilsTest extends TestCase
 {
-	public function testConsumeStringKey()
-	{
-		$array = [
-			'one' => 1,
-			'two' => 2,
-			'three' => 3
-		];
+    public function testConsumeStringKey()
+    {
+        $array = [
+            'one' => 1,
+            'two' => 2,
+            'three' => 3
+        ];
 
-		$value = ArrayUtils::consume('two', $array);
-		$expected = 2;
-		$this->assertSame($expected, $value);
+        $value = ArrayUtils::consume('two', $array);
+        $expected = 2;
+        $this->assertSame($expected, $value);
 
-		$expected = [
-			'one' => 1,
-			'three' => 3
-		];
-		$this->assertSame($expected, $array);
-	}
+        $expected = [
+            'one' => 1,
+            'three' => 3
+        ];
+        $this->assertSame($expected, $array);
+    }
 
-	public function testConsumeNumericKey()
-	{
-		$array = [
-			0 => false,
-			'true' => 'blue'
-		];
-		$value = ArrayUtils::consume(0, $array);
-		$expected = false;
-		$this->assertSame($expected, $value);
+    public function testConsumeNumericKey()
+    {
+        $array = [
+            0 => false,
+            'true' => 'blue'
+        ];
+        $value = ArrayUtils::consume(0, $array);
+        $expected = false;
+        $this->assertSame($expected, $value);
 
-		$expected = [
-			'true' => 'blue',
-		];
-		$this->assertSame($expected, $array);
-	}
+        $expected = [
+            'true' => 'blue',
+        ];
+        $this->assertSame($expected, $array);
+    }
 
-	public function testConsumeNonexistentKey()
-	{
-		$array = [
-			'nothing'
-		];
-		$value = ArrayUtils::consume('undefined', $array);
-		$this->assertNull($value);
+    public function testConsumeNonexistentKey()
+    {
+        $array = [
+            'nothing'
+        ];
+        $value = ArrayUtils::consume('undefined', $array);
+        $this->assertNull($value);
 
-		$expected = [
-			'nothing',
-		];
-		$this->assertSame($expected, $array);
-	}
+        $expected = [
+            'nothing',
+        ];
+        $this->assertSame($expected, $array);
+    }
 }
