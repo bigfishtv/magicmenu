@@ -84,6 +84,20 @@ class CakePathStrategyTest extends TestCase
         ];
     }
 
+    protected function getBasicHashMenuItems()
+    {
+        return [
+            [
+                'path' => [0],
+                'item' => ['url' => '#hash-1'],
+            ],
+            [
+                'path' => [1],
+                'item' => ['url' => '#hash-2'],
+            ],
+        ];
+    }
+
     public function testConstructor()
     {
         $url = '/totally/custom/url';
@@ -157,6 +171,13 @@ class CakePathStrategyTest extends TestCase
     {
         $url = '/some/';
         $result = $this->Strategy->setUrl($url)->getActivePath($this->getDefaultMenuItems());
+        $expected = [];
+        $this->assertEquals($expected, $result);
+    }
+
+    public function testHashUrl()
+    {
+        $result = $this->Strategy->setUrl('/')->getActivePath($this->getBasicHashMenuItems());
         $expected = [];
         $this->assertEquals($expected, $result);
     }

@@ -42,7 +42,11 @@ class CakePathStrategy implements \MagicMenu\Contracts\PathStrategy
                 return false;
             }
             $normalized = Router::normalize($item['item']['url']);
-            $request = new ServerRequest(['url' => $normalized]);
+            try {
+                $request = new ServerRequest(['url' => $normalized]);
+            } catch (\InvalidArgumentException $e) {
+                return false;
+            }
             $parsed = Router::parseRequest($request);
 
             return [
