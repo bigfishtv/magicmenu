@@ -1,6 +1,12 @@
 # MagicMenu Changelog
 
-## 1.0.0
+## 1.0.1 - 3 Aug 2020
+
+### Bug fixes
+
+- Catch exception when using hash-only urls with CakePathStrategy
+
+## 1.0.0 - 1 Jun 2019
 
 ### Breaking Changes
 
