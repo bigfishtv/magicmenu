@@ -1,5 +1,15 @@
 # MagicMenu Changelog
 
+## 1.1.0 - 8 Dec 2020
+
+### Bugfixes
+
+- Always return string from `Menu::render()`
+
+### Enhancements
+
+- Allow separate templates per level
+
 ## 1.0.1 - 3 Aug 2020
 
 ### Bug fixes
