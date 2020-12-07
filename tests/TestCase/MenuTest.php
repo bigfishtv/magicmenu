@@ -702,6 +702,31 @@ class MenuTest extends TestCase
         $this->assertEquals($expected, $result);
     }
 
+    public function testRenderWithLevelSpecificTemplates()
+    {
+        $result = $this->Menu->setTemplates([
+            '1.wrapper' => '<div>{{items}}</div>',
+            '1.item' => '<span><a href="{{url}}"{{attrs}}><span>{{title}}</span></a></span>',
+            '1.separator' => '<hr />',
+        ])->render();
+        $expected = implode('', [
+            '<ul>',
+                '<li><a href="/about"><span>About</span></a></li>',
+                '<li><a href="/work"><span>Work</span></a>',
+                    '<div>',
+                        '<span><a href="/work/thiess"><span>Thiess</span></a></span>',
+                        '<hr />',
+                        '<span><a href="/work/max-employment"><span>MAX Employment</span></a></span>',
+                        '<hr />',
+                        '<span><a href="/work/spike-and-dadda"><span>Spike &amp; Dadda</span></a></span>',
+                    '</div>',
+                '</li>',
+                '<li><a href="/contact"><span>Contact</span></a></li>',
+            '</ul>'
+        ]);
+        $this->assertEquals($expected, $result);
+    }
+
     // TODO: implement this functionality
     // public function testRenderWithArrayUrl()
     // {

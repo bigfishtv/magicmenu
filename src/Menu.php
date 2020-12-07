@@ -186,6 +186,15 @@ class Menu
         return false;
     }
 
+    protected function _getTemplateName($name, $level)
+    {
+        if ($this->getTemplates($level . '.' . $name)) {
+            return $level . '.' . $name;
+        }
+
+        return $name;
+    }
+
     protected function _renderWrapper(array $items, array $path = [])
     {
         $index = 0;
@@ -200,9 +209,10 @@ class Menu
         $options = [
             //'class' => 'nav'
         ];
-        $separator = $this->formatTemplate('separator', []);
+        
+        $separator = $this->formatTemplate($this->_getTemplateName('separator', count($path)), []);
 
-        return $this->formatTemplate('wrapper', [
+        return $this->formatTemplate($this->_getTemplateName('wrapper', count($path)), [
             'attrs' => $this->templater()->formatAttributes($options),
             'items' => implode($separator, $items),
         ]);
@@ -229,7 +239,7 @@ class Menu
             $children = '';
         }
 
-        return $this->formatTemplate('item', [
+        return $this->formatTemplate($this->_getTemplateName('item', count($path) - 1), [
             'title' => isset($item['title']) ? h($item['title']) : '',
             'unescapedTitle' => isset($item['title']) ? $item['title'] : '',
             'url' => $this->getItemUrl($item) ?: $this->getConfig('emptyUrl'),
