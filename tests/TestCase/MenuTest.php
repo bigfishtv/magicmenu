@@ -278,13 +278,13 @@ class MenuTest extends TestCase
     public function testRenderMinDepthNoActivePath()
     {
         $result = $this->Menu->setDepth([1, 1])->render();
-        $this->assertFalse($result);
+        $this->assertEquals('', $result);
     }
 
     public function testRenderMinDepthNoActiveParents()
     {
         $result = $this->Menu->setActivePath([0])->setDepth([1, 1])->render();
-        $this->assertFalse($result);
+        $this->assertEquals('', $result);
     }
 
     public function testRenderDeepMenu()

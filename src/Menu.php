@@ -149,6 +149,11 @@ class Menu
         return (string)$this->render();
     }
 
+    /**
+     * Render menu to a string
+     *
+     * @return string
+     */
     public function render()
     {
         $items = $this->_items;
@@ -164,7 +169,7 @@ class Menu
             }
         }
         if (!$items) {
-            return false;
+            return '';
         }
 
         return $this->_renderWrapper($items, $path);
