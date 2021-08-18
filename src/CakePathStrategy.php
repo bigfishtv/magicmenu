@@ -41,13 +41,20 @@ class CakePathStrategy implements \MagicMenu\Contracts\PathStrategy
             if (empty($item['item']['url'])) {
                 return false;
             }
+
             $normalized = Router::normalize($item['item']['url']);
+
             try {
                 $request = new ServerRequest(['url' => $normalized]);
             } catch (\InvalidArgumentException $e) {
                 return false;
             }
-            $parsed = Router::parseRequest($request);
+
+            try {
+                $parsed = Router::parseRequest($request);
+            } catch (\Exception $e) {
+                return false;
+            }
 
             return [
                 'path' => $item['path'],
