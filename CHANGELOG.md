@@ -1,5 +1,11 @@
 # MagicMenu Changelog
 
+## 1.1.1 - 18 Aug 2021
+
+### Bugfixes
+
+- Capture exceptions with `CakePathStrategy`. This prevents invalid URLs from causing havoc.
+
 ## 1.1.0 - 8 Dec 2020
 
 ### Bugfixes
